@@ -46,3 +46,34 @@ with duplicate_rec as (
 where emp_no in (
     select emp_no from duplicate_rec where rnk>1
 );
+
+
+-- 3.  Retrieve employees who earn more than their manager
+-- employee table - emp_no , salary , manager_id , name 
+-- emp salary> manager salary
+
+
+-- --CREATE TABLE employees (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     name VARCHAR(100) NOT NULL,
+--     salary DECIMAL(10,2) NOT NULL,
+--     manager_id INT,
+--     FOREIGN KEY (manager_id) REFERENCES employees(id)
+-- );
+
+
+
+select e.name as employee, e.salary, m.name as manager, m.salary  as manager_salary 
+from employee m join employee e
+ on e.manager_id= m.manager_id where e.salary>m.salary
+
+
+-- --SELECT e.name AS Employee, e.salary, m.name AS 
+-- Manager, m.salary AS ManagerSalary 
+-- FROM employees e 
+-- JOIN employees m ON e.manager_id = m.id 
+-- WHERE e.salary > m.salary;
+
+-- 4. Count employees in each department having more than 5 employees. 
+select department_id, count(*) as total_cnt from employees group by department_id having count(*)>5;
+
