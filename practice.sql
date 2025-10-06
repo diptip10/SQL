@@ -118,3 +118,15 @@ insert into orders_data values
 ('CA-2021-157833','2021-06-17','2021-06-20','Katherine Ducich','West','San Francisco','Office Supplies','OFF-BI-10001721',51.312,3,17.9592),
 ('CA-2020-149223','2020-09-06','2020-09-11','Elpida Rittenbach','Central','Saint Paul','Office Supplies','OFF-AP-10000358',77.88,6,22.5852),
 ('CA-2020-158568','2020-08-29','2020-09-02','Rick Bensley','Central','Chicago','Office Supplies','OFF-PA-10003256',64.624,7,22.6184);
+
+
+
+select * from orders_data;
+
+-- selecting only required columns
+select order_id, order_date, sales from orders_data;
+
+-- get oldest order_date first and newest at last-- in asc order
+select * from order_data 
+ORDER BY order_date;
+
