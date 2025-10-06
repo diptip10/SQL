@@ -155,3 +155,12 @@ WHERE region= 'central';
 select * from orders_data
 where quantity > 3
 ORDER BY quantity;
+
+-- filter the rows where the order date is 2019-09-17 -- we put date in quotes
+select * from orders_data
+WHERE order_date = '2019-09-17';
+
+-- filtering the orders where the order date is more than 2019-09-17 
+SELECT * from orders_data
+WHERE order_date > '2019-09-17'
+ORDER BY order_date;
