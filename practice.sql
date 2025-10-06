@@ -132,6 +132,17 @@ ORDER BY order_date;
 
 -- if order_date is same for multilple rows then we can futher order the data 
 -- order by order_date and then futher order by profit
+-- in ascending order
 SELECT * from order_data
 ORDER BY order_date, profit;
 
+-- in desc order
+select * from order_data
+ORDER BY order_date DESC , profit; -- in this case order_date will be in desc order and profit in ASC
+
+-- top 5 orders with highest sales
+select * from orders_data 
+ORDER BY sales limit 5;
+
+-- creating new coulumn profit_ratio in the table
+select *, profit/sales as profit_ratio from orders_data;  -- it will only show in output but not in actual table
