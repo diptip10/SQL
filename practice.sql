@@ -146,3 +146,7 @@ ORDER BY sales limit 5;
 
 -- creating new coulumn profit_ratio in the table
 select *, profit/sales as profit_ratio from orders_data;  -- it will only show in output but not in actual table
+
+-- filter the data only of central region 
+SELECT * from orders_data
+WHERE region= 'central';
