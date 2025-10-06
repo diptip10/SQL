@@ -77,3 +77,12 @@ from employee m join employee e
 -- 4. Count employees in each department having more than 5 employees. 
 select department_id, count(*) as total_cnt from employees group by department_id having count(*)>5;
 
+-- 5. Find employees who joined in the last 6 months. 
+SELECT * from employees 
+WHERE join_date >= CURRENT_DATE - INTERVAL '6 months';
+
+
+
+-- 6.  Running total of salaries by department.  
+SELECT name, salary, sum(salary) over (partition by dept_id order by emp_id) from employees;
+
