@@ -144,14 +144,3 @@ ORDER BY order_date DESC , profit; -- in this case order_date will be in desc or
 select * from orders_data 
 ORDER BY sales limit 5;
 
--- creating new coulumn profit_ratio in the table
-select *, profit/sales as profit_ratio from orders_data;  -- it will only show in output but not in actual table
-
--- filter the data only of central region 
-SELECT * from orders_data
-WHERE region= 'central';
-
--- filter the data where quantity is >3
-select * from orders_data
-where quantity > 3
-ORDER BY quantity;
