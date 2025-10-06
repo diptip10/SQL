@@ -130,3 +130,8 @@ select order_id, order_date, sales from orders_data;
 select * from order_data 
 ORDER BY order_date;
 
+-- if order_date is same for multilple rows then we can futher order the data 
+-- order by order_date and then futher order by profit
+SELECT * from order_data
+ORDER BY order_date, profit;
+
