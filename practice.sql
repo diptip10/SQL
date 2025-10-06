@@ -150,3 +150,8 @@ select *, profit/sales as profit_ratio from orders_data;  -- it will only show i
 -- filter the data only of central region 
 SELECT * from orders_data
 WHERE region= 'central';
+
+-- filter the data where quantity is >3
+select * from orders_data
+where quantity > 3
+ORDER BY quantity;
