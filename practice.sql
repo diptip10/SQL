@@ -167,4 +167,15 @@ ORDER BY order_date;
 
 -- filter the record having the region central and tecnology as category
 SELECT * from orders_data 
-WHERE region = 'central' AND category = 'technology';  -- and will theck for both theconditions to be true
+WHERE region = 'central' AND category = 'technology';  -- and will theck for both the conditions to be true
+
+--  filter the condition where the region is central or category as technology
+-- if either of the conditions is true, the row will be included in the result.
+SELECT * FROM order_data
+WHERE region = 'central' or category = 'technology' 
+
+-- Fetch records where region is 'central' or category is 'technology' and quantity > 6, then sort by quantity
+SELECT * FROM order_data
+WHERE (region = 'central' or category = 'technology' ) and quantity > 6
+ORDER BY quantity;
+
