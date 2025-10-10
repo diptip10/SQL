@@ -171,11 +171,19 @@ WHERE region = 'central' AND category = 'technology';  -- and will theck for bot
 
 --  filter the condition where the region is central or category as technology
 -- if either of the conditions is true, the row will be included in the result.
-SELECT * FROM order_data
+SELECT * FROM orders_data
 WHERE region = 'central' or category = 'technology' 
 
 -- Fetch records where region is 'central' or category is 'technology' and quantity > 6, then sort by quantity
-SELECT * FROM order_data
+SELECT * FROM orders_data
 WHERE (region = 'central' or category = 'technology' ) and quantity > 6
 ORDER BY quantity;
 
+-- Fetch records where quantity is between 3 and 5 (inclusive), sorted by quantity
+SELECT * FROM orders_data
+where quantity>=3 and quantity<=5
+ORDER BY quantity;
+-- Same logic using BETWEEN operator
+SELECT * FROM orders_data
+WHERE quantity BETWEEN 3 and 5
+ORDER BY quantity;
