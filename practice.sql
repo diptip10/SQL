@@ -187,3 +187,24 @@ ORDER BY quantity;
 SELECT * FROM orders_data
 WHERE quantity BETWEEN 3 and 5
 ORDER BY quantity;
+-- Fetch records where quantity is either 3, 4, or 5, sorted by quantity
+SELECT * FROM orders_data
+WHERE quantity IN( 3 ,4, 5)
+ORDER BY quantity;
+
+-- Pattern matching
+-- Fetch records where customer_name starts with 'A'
+-- The % is a wildcard that represents any sequence of characters.
+SELECT * FROM orders_data
+WHERE customer_name like "A%";
+-- customer name end with letter 'n'
+SELECT * FROM orders_data
+WHERE customer_name like "%n";
+-- Fetch records where the second character in customer_name is 'e'
+-- ( _ )Matches exactly one character.
+SELECT * FROM orders_data
+WHERE customer_name like "_e%";
+
+-- Fetch records where second character is 'a' or 'e' and name ends with 'n'
+SELECT * FROM orders_data
+WHERE (customer_name LIKE '_a%n' OR customer_name LIKE '_e%n');
