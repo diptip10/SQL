@@ -208,3 +208,31 @@ WHERE customer_name like "_e%";
 -- Fetch records where second character is 'a' or 'e' and name ends with 'n'
 SELECT * FROM orders_data
 WHERE (customer_name LIKE '_a%n' OR customer_name LIKE '_e%n');
+
+
+-- aggregate
+-- get total sum
+SELECT sum(sales) as total_sales 
+FROM orders_data;
+
+-- fetch the average sales from the table
+SELECT avg(sales) as avg_sales
+FROM orders_data;
+
+-- avg sales without using avg
+SELECT sum(sales)/count(*) as avg_sales
+FROM orders_data;
+
+-- Find total and average sales by region
+SELECT sum(sales) as total_sales, avg(sales) as avg_sales
+FROM orders_data
+ORDER BY region;
+
+-- Find maximum and minimum sales
+SELECT MAX(sales) as max_sales, MIN(sales) as min_sales
+FROM orders_data;
+
+-- Find total sales and profit by category
+SELECT SUM(sales) as total_sales, SUM(profit) as total_profit
+FROM orders_data
+GROUP BY category;
