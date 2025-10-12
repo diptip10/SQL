@@ -236,3 +236,21 @@ FROM orders_data;
 SELECT SUM(sales) as total_sales, SUM(profit) as total_profit
 FROM orders_data
 GROUP BY category;
+
+-- Get total sales for each category
+SELECT category, SUM(sales) AS category_sales
+FROM orders_data
+GROUP BY category;
+
+-- having clause
+-- Retrieve cities where total sales exceed 100
+SELECT city, SUM(sales) as total_sales
+FROM orders_data
+GROUP BY city
+having SUM(sales)>100;
+
+-- Calculate total sales for each city in the West region
+SELECT city, SUM(sales) as total_sales 
+FROM orders_data
+where region = 'west'
+GROUP BY city;
