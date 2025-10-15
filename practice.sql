@@ -254,3 +254,11 @@ SELECT city, SUM(sales) as total_sales
 FROM orders_data
 where region = 'west'
 GROUP BY city;
+
+-- null check
+SELECT * FROM orders_data
+WHERE city IS NULL;
+
+-- not null values
+SELECT * FROM orders_data
+WHERE city IS NOT NULL;
