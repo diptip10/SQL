@@ -1,0 +1,29 @@
+-- Table  game
+-- id | mdate | stadium	| team1	| team2
+
+-- Table goal
+-- matchid | teamid | player | gtime |
+
+-- Table eteam
+-- id | teamname |coach
+
+-- 1. show the matchid and player name for all goals scored by Germany. To identify German players, check for: teamid = 'GER'
+SELECT matchid, player FROM goal 
+WHERE teamid = 'GER';
+
+-- 2. Show id, stadium, team1, team2 for just game 1012
+SELECT id,stadium,team1,team2
+FROM game
+WHERE id  = 1012;
+
+-- 3. show the player, teamid, stadium and mdate for every German goal.
+SELECT gl.player, gl.teamid, gm.stadium, gm.mdate
+FROM goal gl JOIN game gm
+ON gm.id = gl.matchid
+WHERE  gl.teamid = 'GER';
+
+-- 4. Show the team1, team2 and player for every goal scored by a player called Mario player LIKE 'Mario%'
+SELECT gm.team1, gm.team2, gl.player 
+FROM goal gl JOIN game gm
+ON gm.id = gl.matchid
+WHERE player LIKE 'Mario%'
