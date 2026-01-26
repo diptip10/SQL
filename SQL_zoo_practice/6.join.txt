@@ -27,3 +27,42 @@ SELECT gm.team1, gm.team2, gl.player
 FROM goal gl JOIN game gm
 ON gm.id = gl.matchid
 WHERE player LIKE 'Mario%'
+
+-- 5. Show player, teamid, coach, gtime for all goals scored in the first 10 minutes gtime<=10
+SELECT g.player, g.teamid, et.coach, g.gtime 
+FROM goal g JOIN eteam et
+ON g.teamid = et.id
+WHERE gtime <= 10;
+
+-- 6. List the dates of the matches and the name of the team in which 'Fernando Santos' was the team1 coach.
+SELECT g.mdate,et.teamname 
+FROM game g JOIN eteam et
+ON g.team1 = et.id
+Where coach = 'Fernando Santos';
+
+-- 7. List the player for every goal scored in a game where the stadium was 'National Stadium, Warsaw'
+SELECT gl.player FROM 
+goal gl JOIN game gm
+ON gl.matchid = gm.id
+WHERE stadium = 'National Stadium, Warsaw';
+
+-- 8. show the name of all players who scored a goal against Germany
+SELECT DISTINCT gl.player FROM game gm
+JOIN goal gl
+ON gm.id = gl.matchid
+WHERE (gm.team1 = 'ger' OR gm.team2 = 'ger')
+AND gl.teamid <> 'ger';
+
+-- 9. Show teamname and the total number of goals scored.
+SELECT et.teamname, COUNT(*) as total_goals
+FROM goal g JOIN eteam et
+ON g.teamid = et.id
+GROUP BY teamname;
+
+-- 10. Show the stadium and the number of goals scored in each stadium.
+SELECT gm.stadium, COUNT(*) AS goal_cnt
+FROM game gm JOIN goal gl
+ON gm.id = gl.matchid
+GROUP BY stadium ;
+
+
