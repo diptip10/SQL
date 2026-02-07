@@ -202,4 +202,74 @@ SELECT country,
         ) AS population_category 
  FROM population;
 
+-- SIMPLE CASE EXPRESSION
+SELECT country,
+      total_population,
+      CASE Country
+        WHEN 'India' THEN 'Asia'
+        WHEN 'United States' THEN 'Americas'
+        ELSE 'Unknown'
+      END AS continent
+  FROM Population;
+
+/*
+write a SELECT statement query the table population and output the following columns as shown in the screenshot below
+
+1) country
+
+2) continent - Please use the rules as below
+
+     For United States and Mexico - North America
+
+     For Brazil - South America
+
+     For all other countries, leave the continent as is.
+
+3) total_population
+*/
+SELECT country,
+    CASE country
+        WHEN 'United States' THEN 'North America'
+        WHEN 'Mexico' THEN 'North America'
+        WHEN 'Brazil' THEN 'South America'
+        ELSE continent
+    END AS continent,
+        total_population
+ FROM population;
+
+-- use case expressions instead of iff functions
+SELECT country,
+  total_population,
+  CASE
+    WHEN total_population > 250000000
+    THEN 'High'
+    WHEN total_population > 150000000
+    THEN 'Medium'
+    ELSE 'Low'
+  END AS population_category
+ FROM population;
+
+/*
+write a SELECT statement to query the table population and output the following columns as shown in the screenshot below
+country
+total_population
+
+ population_category - This is a column derived from total_population using the rules below. Please use CASE expression to implement this.
+1. population greater than or equal to 1 billion - Output 'Very High'
+2. population greater than or equal to  250 million but less than 1 billion - Output 'High'
+3. population greater than or equal to  150 million but less than 250 million - Output 'Medium'
+4. population less than 150 million - Output 'Low'
+*/
+SELECT country,
+   total_population,
+   CASE
+     WHEN total_population > 1000000000
+     THEN 'Very High'
+     WHEN total_population > 250000000
+     THEN 'High'
+     WHEN total_population > 150000000
+     THEN 'Medium'
+     ELSE 'Low'
+  END AS population_category
+ FROM population;
 
