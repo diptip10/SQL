@@ -90,3 +90,61 @@ SELECT ABS(-100) AS abs,
       POWER(5,2) AS power,
       SQRT(25) AS sqrt,
       MOD(30/5) AS mod;
+
+-- table my_table 
+-- columns - col1, col2, col3
+-- write a SELECT statement query the data from table my_table and output the following columns in the result set.
+-- col1_abs - Absolute value of col1
+-- col2_ceil - Ceiling of the value of col2
+-- col2_floor - Floor of the value of col2
+-- col3_power - Value of col3 powered by 2
+-- col3_sqrt - Square root of col3.
+SELECT ABS(col1) AS col1_abs,
+       CEIL(col2) AS col2_ceil,
+       FLOOR(col2) AS col2_floor,
+       POWER(col3,2) AS col3_power,
+       SQRT(col3) AS col3_sqrt
+ FROM  my_table;
+
+-- NESTED FUNCTIONS
+-- EX1 :  PYTHON FUNDAMENTALS TO SQL FUNDAMENTALS
+SELECT UPPER(REPLACE('Python fundamentals', 'Python','SQL')) AS output;
+
+-- INPUT - FULL NAME  VENUS WILLIAMS, SERENA WILLIAMS
+-- OUTPUT -- FIRST NAME, SURNAME
+SELECT SUBSTR('Venus Williams',1, INSTR('Venus Williams',' ') - 1) AS first_name,
+      SUBSTR('Venus Williams',INSTR('Venus Williams',' ') + 1) AS surname
+
+CREATE TABLE person;
+
+INSERT INTO person(full_name)
+  VALUES('Venus Williams'),
+        ('Serena Williams'),
+        ('Roger Federer'),
+        ('Rafael Nadal');
+
+SELECT SUBSTR(full_name,1, INSTR(full_name,' ') - 1) AS first_name,
+      SUBSTR(full_name, INSTR(full_name,' ') + 1) AS surname
+ FROM person;
+
+--  table called population with 2 columns country_continent and total_population
+--  SELECT statement to query all the data from the table population and separate the country and continent as 2 separate columns.
+SELECT SUBSTR(country_continent,1,INSTR(country_continent,'-') - 1) AS country,
+       SUBSTR(country_continent,INSTR(country_continent,'-') + 1) AS continent,
+       total_population
+ FROM  population;
+
+-- table - contact_details
+-- columns - name, email
+-- Write a SELECT statement to query the table contact_details and produce a result set with the following columns.
+-- first_name - First word of the name
+-- surname - Second word of the name
+-- email - email as it is from the table
+-- domain_name - Domain name derived from the email address. Domain name is usually the part of the email address after the @ symbol.
+SELECT SUBSTR(name, 1, INSTR(name,' ') - 1) AS first_name,
+       SUBSTR(name,INSTR(name,' ') + 1) AS surname,
+       email,
+       SUBSTR(email,INSTR(email,'@') + 1) AS domain_name
+ FROM contact_details;
+
+ 
