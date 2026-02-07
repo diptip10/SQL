@@ -147,4 +147,59 @@ SELECT SUBSTR(name, 1, INSTR(name,' ') - 1) AS first_name,
        SUBSTR(email,INSTR(email,'@') + 1) AS domain_name
  FROM contact_details;
 
- 
+-- table -- contact_details
+-- columns -- first_name, surname, company_name
+-- Write a SELECT statement to query the table contact_details and produce a result set with the following columns.
+-- full_name - first_name and surname combined with a space between them
+-- email_address - Email address follows the format - first_name.surname@company_name.com. Email address uses only lowercase characters
+SELECT first_name || ' ' || surname AS full_name,
+      LOWER(first_name) || '.' || LOWER(surname) || '@' || LOWER(company_name) || '.com' AS email_address
+ FROM contact_details;  
+
+-- CONDITIONAL FUNCTIONS - IIF
+SELECT country,
+       total_population,
+       IIF(total_population > 250000000,'High','Medium') AS population_category
+  FROM population;
+
+SELECT country,
+       total_population,
+       IIF(total_population > 250000000,
+       'High',
+       IIF(total_population > 150000000
+            'Medium',
+            'low')
+        ) AS population_category
+  FROM population;
+
+-- TABLE - POPULATION
+-- COLUMNS - COUNTRY, CONTINENT, TOTAL_POPULATION
+/*
+write a SELECT statement to query the table population and output the following columns as shown in the screenshot below
+country
+total_population
+population_category - This is a column derived from total_population using the rules below. Please use IIF function to implement this.
+
+1. population greater than or equal to 1 billion - Output 'Very High'
+
+2. population greater than or equal to  250 million but less than 1 billion - Output 'High'
+
+3. population greater than or equal to  150 million but less than 250 million - Output 'Medium'
+
+4. population less than 150 million - Output 'Low'
+*/
+SELECT country,
+    total_population,
+    IIF(total_population  >= 1000000000,
+    'Very High',
+        IIF(total_population >= 250000000 
+        AND total_population < 1000000000,
+        'High',
+            IIF(total_population >= 150000000 AND
+            total_population < 250000000,
+            'Medium', 'Low')
+            )
+        ) AS population_category 
+ FROM population;
+
+
