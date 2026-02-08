@@ -346,3 +346,42 @@ SELECT IFNULL(country,'Unknown country') AS country,
        total_population
     FROM population;
 
+-- CONDITIONAL FUNCTIONS - COALESCE - returns first non null value in the list of values supplied
+-- Set-up data for COALESCE function
+
+DROP TABLE IF EXISTS population;
+
+CREATE TABLE population
+(
+    country          VARCHAR(50),
+    continent       VARCHAR(10),
+    total_population_2023 INT,
+    total_population_2022 INT,
+    total_population_2021 INT
+);
+
+INSERT INTO population
+(country, continent, total_population_2023, total_population_2022, total_population_2021)
+VALUES
+('India', 'Asia', 1428627663, 1428627663, NULL),
+('China', 'Asia', 1425671352, 1425671352, NULL),
+('United States', 'Americas', 339996564, NULL, NULL),
+('Indonesia', 'Asia', 277534123, 277534123, NULL),
+('Pakistan', 'Asia', NULL, 240485658, NULL),
+('Nigeria', 'Africa', 223804632, 223804632, NULL),
+('Brazil', 'Americas', 216422446, NULL, NULL),
+('Bangladesh', 'Asia', 172954319, 172954319, NULL),
+('Russia', 'Europe', NULL, 144444359, NULL),
+('Mexico', 'Americas', NULL, NULL, 128455567);
+
+/*
+write a SELECT statement to query the table population and output the following columns
+country
+continent
+latest_population Get the value of the total population from the most recent year for which it's available.
+*/
+SELECT country,
+       continent,
+       COALESCE(total_population_2023, total_population_2022, total_population_2021) AS latest_population
+    FROM population;
+
