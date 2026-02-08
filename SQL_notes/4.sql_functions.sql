@@ -385,3 +385,56 @@ SELECT country,
        COALESCE(total_population_2023, total_population_2022, total_population_2021) AS latest_population
     FROM population;
 
+-- CONDITIONAL FUNCTIONS - NULLIF 
+-- returns NULL  if both parameter values are the same . Otherwise returns the value of the first parameter
+/* write a SELECT statement to query the table population and output the following columns
+country
+continent - If the value is 'Unknown', output the value as NULL
+total_population - If the value is 0, output the value as NULL
+*/
+SELECT country,
+       NULLIF(continent, 'Unknown') AS continent,
+       NULLIF(total_population, 0) AS total_population
+  FROM population;
+    
+-- table -- popular_databases
+-- columns - vote_percentage_2023, vote_percentage_2022, vote_percentage_2021
+/* write a SELECT statement to query the table popular_databases and output the following columns
+
+database_name
+
+vote_year - This column is populated with the latest year for which the data is available for. If the data is available for none of the years, please output the value 'N/A'
+
+vote_percentage - This column should have the vote percentage for the latest year for which the data is available. If the data is available for none of the years, please output the value
+    'N/A'
+
+*/
+SELECT database_name,
+    CASE 
+      WHEN vote_percentage_2023 IS NOT NULL THEN 2023
+      WHEN vote_percentage_2022 IS NOT NULL THEN 2022
+      WHEN vote_percentage_2021 IS NOT NULL THEN 2021
+      ELSE 'N/A'
+    END AS vote_year,
+      
+    CASE 
+      WHEN vote_percentage_2023 IS NOT NULL THEN vote_percentage_2023
+      WHEN vote_percentage_2022 IS NOT NULL THEN vote_percentage_2022
+      WHEN vote_percentage_2021 IS NOT NULL THEN vote_percentage_2021
+      ELSE 'N/A'
+    END AS vote_percentage
+ FROM popular_databases;
+-- OR
+SELECT database_name,
+    CASE 
+      WHEN vote_percentage_2023 IS NOT NULL THEN 2023
+      WHEN vote_percentage_2022 IS NOT NULL THEN 2022
+      WHEN vote_percentage_2021 IS NOT NULL THEN 2021
+      ELSE 'N/A'
+    END AS vote_year,
+    COALESCE(vote_percentage_2023, 
+             vote_percentage_2022, 
+             vote_percentage_2021,
+             'N/A') AS vote_percentage
+  FROM popular_databases;
+
