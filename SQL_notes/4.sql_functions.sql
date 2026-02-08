@@ -273,3 +273,76 @@ SELECT country,
   END AS population_category
  FROM population;
 
+-- NULLS -  EMPTY DATA / MISSING VALUES
+/*
+ write a SELECT statement to query the table population and output the columns country, continent and total_population  where both the conditions below have been met.
+
+Value of country is NULL
+
+Value of continent is NOT NULL
+
+*/
+SELECT country,
+    continent,
+    total_population
+  FROM population
+WHERE country IS NULL
+AND continent IS NOT NULL;
+
+-- CONDITIONAL FUNCTIONS - IFNULL
+-- Set-up data for IFNULL function
+
+DROP TABLE IF EXISTS population;
+
+CREATE TABLE population
+(
+    country          VARCHAR(50),
+    continent       VARCHAR(10),
+    total_population_2023 INT,
+    total_population_2022 INT
+);
+
+INSERT INTO population
+(country, continent, total_population_2023, total_population_2022)
+VALUES
+('India', 'Asia', 1428627663, 1428627663),
+('China', 'Asia', 1425671352, 1425671352),
+('United States', 'Americas', 339996564, NULL),
+('Indonesia', 'Asia', 277534123, 277534123),
+('Pakistan', 'Asia', NULL, 240485658),
+('Nigeria', 'Africa', 223804632, 223804632),
+('Brazil', 'Americas', 216422446, NULL),
+('Bangladesh', 'Asia', 172954319, 172954319),
+('Russia', 'Europe', NULL, 144444359),
+('Mexico', 'Americas', NULL, NULL);
+
+SELECT *
+   FROM population;
+
+SELECT country,
+      total_population_2023, 
+      total_population_2022,
+      IFNULL(total_population_2023, total_population_2022) AS total_population
+   FROM population;
+
+SELECT country,
+      total_population_2023, 
+      total_population_2022,
+      IFNULL(total_population_2023, total_population_2022) AS total_population,
+      IIF(total_population_2023 IS NULL, total_population_2022, total_population_2023)  AS total_population_iif
+  FROM population;
+
+/*
+write a SELECT statement to query the table population and output the following columns
+
+country - If the value of the country is NULL, then output 'Unknown country'
+
+continent - If the value of the continent is NULL, then output 'Unknown continent'
+
+total_population
+*/
+SELECT IFNULL(country,'Unknown country') AS country,
+       IFNULL(continent,'Unknown continent') AS continent,
+       total_population
+    FROM population;
+
