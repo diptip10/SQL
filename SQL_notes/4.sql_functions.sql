@@ -603,3 +603,17 @@ SELECT MAX(ROUND(CAST(total_population AS REAL)/1000000,2)) AS highest_populatio
  FROM population
   WHERE continent = 'Asia'; 
 
+-- AGGREAGATE FUNCTION - NULLS
+/*write a SELECT statement to query the table population , apply the filter to include only countries in the continent Americas, and output the following columnS
+
+highest_population - Population of the highest populated country in Americas
+lowest_population - Population of the lowest populated country in Americas
+average_population - Average population of all the countries in Americas
+total_population - Total population of all the countries in Americas
+*/
+SELECT MAX(total_population) AS highest_population,
+       MIN(total_population) AS lowest_population,
+       AVG(total_population) AS average_population,
+       SUM(total_population) AS total_population
+ FROM population
+   WHERE continent = 'Americas'
