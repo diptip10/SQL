@@ -679,4 +679,36 @@ SELECT COUNT(*) AS total_number_of_records,
        COUNT(DISTINCT continent) AS total_unique_continents
  FROM population;
 
- 
+-- GROUP BY
+SELECT continent
+ FROM population
+WHERE total_population > 250000000
+GROUP BY continent;
+
+-- GROUP AGGREGATES
+SELECT continent,
+       COUNT(*) AS no_of_countries,
+       SUM(total_population) AS total_population
+  FROM Population
+GROUP BY continent;
+
+/*write a SELECT statement to query the table population , and output the following columns as shown in the screenshot below.
+
+continent
+
+number_of_countries - Number of countries in the continent
+
+highest_population - Population of the highest populated country in the continent
+
+lowest_population - Population of the lowest populated country in the continent
+
+total_population - Total population of all the countries in the continent put together
+*/
+SELECT continent,
+       count(country) AS number_of_countries,
+       MAX(total_population) AS highest_population,
+       MIN(total_population) AS lowest_population,
+       SUM(total_population) AS total_population
+ FROM population
+GROUP BY continent;
+
