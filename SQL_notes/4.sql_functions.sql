@@ -561,3 +561,19 @@ SELECT user_name,
        registration_date,
        (STRFTIME('%Y-%m-%d',registration_date) - STRFTIME('%Y-%m-%d',date_of_birth)) -  (STRFTIME('%m-%d',registration_date ) < STRFTIME('%m-%d', date_of_birth)) AS age_on_registration_date
  FROM registration ;
+
+/*Identify all the customers who turned 60 before 4th January 2024 so that we can send out letter to them to say that they are eligible for pension payouts. The result set should include the following columns
+
+customer_name
+
+date_of_birth - Formatted to the local format DD/MM/YYYY
+
+age - The customer's age on the 4th January 2024.
+*/
+SELECT customer_name,
+       STRFTIME('%d/%m/%Y',date_of_birth) AS date_of_birth,
+       (STRFTIME('%Y','2024-01-04') -  STRFTIME('%Y', date_of_birth)) - (STRFTIME('%m-%d','2024-01-04') < STRFTIME('%m-%d',date_of_birth)) AS age
+ FROM customer
+    WHERE 
+     (STRFTIME('%Y','2024-01-04') -  STRFTIME('%Y', date_of_birth)) - (STRFTIME('%m-%d','2024-01-04') < STRFTIME('%m-%d',date_of_birth)) > 60;
+       
