@@ -438,3 +438,126 @@ SELECT database_name,
              'N/A') AS vote_percentage
   FROM popular_databases;
 
+/*
+ write a SELECT statement to query the table popular_languages and output the following columns
+
+language
+
+vote_year -  This column is populated with the latest year for which the data is available for. If the data is available for none of the years, please output the value 'N/A'
+
+vote_percentage - This column should have the vote percentage for the latest year for which the data is available. If the data is available for none of the years, please output the value 'N/A'
+
+*/
+SELECT language,
+    CASE 
+        WHEN (vote_percentage_2023 > 0) THEN 2023
+        WHEN (vote_percentage_2022 > 0) THEN 2022
+        WHEN (vote_percentage_2021 > 0) THEN 2021
+        ELSE 'N/A'
+    END AS vote_year,
+   COALESCE(NULLIF(vote_percentage_2023, 0),
+            NULLIF(vote_percentage_2022, 0),
+            NULLIF(vote_percentage_2021, 0), 
+            'N/A') AS vote_percentage
+ FROM popular_languages;
+/*
+-- DATE FUNCTION
+-- DATE MANIPULATION - add or substract from a date
+                     - Get first day of the month for the given date
+                     - get the 1st weekday of the given date
+
+-- DATE FORMATTING - format to a local date format
+                   - Exctact year, month, etc from date                  
+*/
+-- date manipulation functions -- DATE , TIME , DATETIME
+SELECT DATE('now');
+SELECT DATE('09-02-2026', '-10 days')
+SELECT DATE('09-02-2026','start of year', '-5 days')
+
+SELECT DATE('now') AS oredr_date,
+       DATE('now','15 days') AS payment_due_date,
+       DATE('now','28 days') AS return_eligibility_date,
+       DATE('now','2 years') AS warrenty_expiry_date;
+
+-- TIME FUNCTION
+SELECT TIME('now')
+
+SELECT TIME('now','1 hour','1 minute', '1 second')
+
+-- create table for DATETIME FUNCTION
+SELECT DATETIME('now')
+SELECT DATETIME('now', '1 day')
+
+CREATE TABLE orders (
+    order_no   INT,
+    order_date DATE
+);
+INSERT INTO orders (order_no, order_date) VALUES
+(1, '2024-01-20'),
+(1, '2024-01-25'),
+(1, '2024-03-10'),
+(1, '2024-04-11');
+
+/*write a SELECT statement to query the table orders and output the following columns
+order_no
+order_date
+payment_due_date - 14 days from the order date
+return_eligibility_date - 1 month from the order date
+warranty_expiry_date - 2 years from the order date
+*/
+SELECT order_no,
+       order_date,
+       DATE(order_date,'14 days') AS payment_due_date,
+       DATE(order_date,'1 months') AS return_eligibility_date,
+       DATE(order_date,'2 years') AS warranty_expiry_date
+ FROM orders ;
+
+-- MySQL 
+SELECT
+    order_no,
+    order_date,
+    DATE_ADD(order_date, INTERVAL 14 DAY)  AS payment_due_date,
+    DATE_ADD(order_date, INTERVAL 1 MONTH) AS return_eligibility_date,
+    DATE_ADD(order_date, INTERVAL 2 YEAR)  AS warranty_expiry_date
+FROM orders;
+
+-- DATE FORMATTING FUNCTIONS
+SELECT STRFTIME('%d-%m-%Y','now');
+SELECT STRFTIME('%d-%m-%Y', '2026-02-09')
+SELECT STRFTIME('%d-%m-%Y', '2026-02-09','start of year', '10 days')
+
+-- in MySQL
+SELECT DATE_FORMAT(CURDATE(), '%d-%m-%Y');
+SELECT DATE_FORMAT('2026-02-09', '%d-%m-%Y');
+SELECT DATE_FORMAT(DATE_ADD(
+        DATE_FORMAT('2026-02-09', '%Y-01-01'),
+        INTERVAL 10 DAY),'%d-%m-%Y');
+/* write a SELECT statement to query the table orders and output the following columns
+order_no
+order_date
+payment_due_date - 14 days from the order date
+return_eligibility_date - 1 month from the order date
+warranty_expiry_date - 2 years from the order date
+All the dates to be formatted as DD-MM-YYYY
+*/
+SELECT order_no,
+       STRFTIME('%d-%m-%Y',order_date) AS order_date,
+       STRFTIME('%d-%m-%Y',order_date,'14 days') AS payment_due_date,
+       STRFTIME('%d-%m-%Y',order_date,'1 months') AS return_eligibility_date,
+       STRFTIME('%d-%m-%Y',order_date,'2 years') AS warranty_expiry_date
+ FROM orders ;
+
+-- Calculate Age of Someone
+
+SELECT (strftime('%Y', 'now') - strftime('%Y', '1975-03-17')) - (strftime('%m-%d', 'now') < strftime('%m-%d', '1975-08-17'));
+
+/*
+-- table - registration
+-- columns - user_name, date_of_birth, registration_date
+SELECT statement to query the table registration and calculate the age of all of the users as at the date of registration_date so that we can identify whether the user is above or below the age limit for the social media site which is 18 years.
+*/
+SELECT user_name,
+       date_of_birth,
+       registration_date,
+       (STRFTIME('%Y-%m-%d',registration_date) - STRFTIME('%Y-%m-%d',date_of_birth)) -  (STRFTIME('%m-%d',registration_date ) < STRFTIME('%m-%d', date_of_birth)) AS age_on_registration_date
+ FROM registration ;
