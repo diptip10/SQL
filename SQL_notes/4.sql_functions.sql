@@ -577,3 +577,29 @@ SELECT customer_name,
     WHERE 
      (STRFTIME('%Y','2024-01-04') -  STRFTIME('%Y', date_of_birth)) - (STRFTIME('%m-%d','2024-01-04') < STRFTIME('%m-%d',date_of_birth)) > 60;
        
+-- AGGREAGATE FUNCTIONS -  MAX, MIN, SUM, AVG, COUNT
+SELECT MAX(total_population) AS highest_population,
+       MIN(total_population) AS lowest_population,
+       AVG(total_population) AS average_population,
+       SUM(total_population) AS sum_population
+  FROM Population;
+
+SELECT MAX(ROUND(CAST(total_population AS REAL)/1000000,2)) AS highest_population ,
+       MIN(ROUND(CAST(total_population AS REAL)/1000000,2)) AS lowest_population,
+       ROUND(AVG(CAST(total_population AS REAL)/1000000),2)AS average_population,
+       ROUND(SUM(CAST(total_population AS REAL)/1000000),2) AS total_population
+ FROM population
+
+/* write a SELECT statement to query the table population , apply the filter to include only countries in the continent Asia, and output the following columns 
+1) highest_population - Population of the highest populated country in Asia
+2) lowest_population - Population of the lowest populated country in Asia
+3) average_population - Average population of all the countries in Asia
+4) total_population - Total population of all the countries in Asia
+*/
+SELECT MAX(ROUND(CAST(total_population AS REAL)/1000000,2)) AS highest_population ,
+       MIN(ROUND(CAST(total_population AS REAL)/1000000,2)) AS lowest_population,
+       ROUND(AVG(CAST(total_population AS REAL)/1000000),2)AS average_population,
+       ROUND(SUM(CAST(total_population AS REAL)/1000000),2) AS total_population
+ FROM population
+  WHERE continent = 'Asia'; 
+
