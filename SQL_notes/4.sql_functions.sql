@@ -576,7 +576,32 @@ SELECT customer_name,
  FROM customer
     WHERE 
      (STRFTIME('%Y','2024-01-04') -  STRFTIME('%Y', date_of_birth)) - (STRFTIME('%m-%d','2024-01-04') < STRFTIME('%m-%d',date_of_birth)) > 60;
-       
+
+-- Set-up the tables required for this section 
+
+DROP TABLE IF EXISTS population;
+
+CREATE TABLE population
+(
+    country          VARCHAR(50),
+    continent       VARCHAR(10),
+    total_population BIGINT
+);
+
+INSERT INTO population
+(country, continent, total_population)
+VALUES
+('India', 'Asia', 1428627663),
+('China', 'Asia', 1425671352),
+('United States', 'Americas', 339996564),
+('Indonesia', 'Asia', 277534123),
+('Pakistan', 'Asia', 240485658),
+('Nigeria', 'Africa', 223804632),
+('Brazil', 'Americas', 216422446),
+('Bangladesh', 'Asia', 172954319),
+('Russia', 'Europe', 144444359),
+('Mexico', 'Americas', 128455567); 
+
 -- AGGREAGATE FUNCTIONS -  MAX, MIN, SUM, AVG, COUNT
 SELECT MAX(total_population) AS highest_population,
        MIN(total_population) AS lowest_population,
@@ -617,3 +642,41 @@ SELECT MAX(total_population) AS highest_population,
        SUM(total_population) AS total_population
  FROM population
    WHERE continent = 'Americas'
+
+-- AGGREGATE FUNCTION - COUNT
+UPDATE population
+      SET total_population = NULL
+ WHERE country IN ('India', 'Pakistan', 'Mexico');
+
+/* write a SELECT statement to query the table population , and output the following columns
+
+total_number_of_records - total number of records in the table
+
+total_countries - The number of countries with the country names present
+
+total_populations - The number of records with total population value present.
+*/
+SELECT COUNT(*) AS total_number_of_records,
+       COUNT(country) AS total_countries,
+       COUNT(total_population) AS total_populations
+ FROM population;
+
+-- AGGREGATE FUNCTION - COUNT DISTINCT
+SELECT COUNT(DISTINCT continent) 
+ FROM population;
+
+/* write a SELECT statement to query the table population , and output the following columns as shown 
+
+total_number_of_records  - Total number of records in the table
+
+total_unique_countries - Total number of unique countries in the table
+
+total_unique_continents - Total number of unique continents in the table
+
+*/
+SELECT COUNT(*) AS total_number_of_records,
+       COUNT(DISTINCT country) AS total_unique_countries,
+       COUNT(DISTINCT continent) AS total_unique_continents
+ FROM population;
+
+ 
