@@ -797,3 +797,46 @@ SELECT continent,
  FROM population
 GROUP BY continent
 HAVING average_population BETWEEN 200000000 AND 300000000;
+
+-- ORDER OF EXECUTION
+-- FROM --> WHERE --> GROUP BY --> HAVING --> SELECT --> OREDR BY --> LIMIT
+
+-- report the highly populated continent along with it's total population. India and China are to be
+-- excluded from the calculations . continents with just 1 country are to be excluded. 
+SELECT continent,
+       SUM(total_population) AS total_population
+FROM Population
+WHERE country NOT IN ("India","China")
+GROUP BY continent
+HAVING COUNT(*) > 1 
+ORDER BY total_population DESC
+LIMIT 1;
+
+/*write a SELECT statement to query the table population , 
+and output the highest populated continent and income_level combination.
+Please apply the following filter conditions
+
+Exclude countries India and Indonesia from any calculations
+
+Exclude continent, income_level combination that contains only one country.
+
+The result set includes the following columns as shown in the screenshot below
+
+continent
+income_level
+number_of_countries - Number of countries in this continent, income level combination
+total_population - total_population of the countries in this continent, income level combination
+*/
+SELECT continent,
+       income_level,
+       COUNT(*) AS number_of_countries,
+       SUM(total_population) AS total_population
+FROM population
+WHERE country NOT IN ('India','Indonesia')
+GROUP BY continent,
+         income_level
+HAVING COUNT(*) > 1 
+ORDER BY total_population DESC
+LIMIT 1;
+
+
