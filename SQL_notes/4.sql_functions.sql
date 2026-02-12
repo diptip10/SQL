@@ -712,3 +712,52 @@ SELECT continent,
  FROM population
 GROUP BY continent;
 
+-- Set-up the tables required Group Aggregates with multiple columns
+
+DROP TABLE IF EXISTS population;
+
+CREATE TABLE population
+(
+    country          VARCHAR(50),
+    continent       VARCHAR(10),
+    income_level  VARCHAR(20),
+    total_population BIGINT
+);
+
+INSERT INTO population
+(country, continent, income_level, total_population)
+VALUES
+('India', 'Asia', 'Lower Middle', 1428627663),
+('China', 'Asia', 'Upper Middle', 1425671352),
+('United States', 'Americas', 'High', 339996564),
+('Indonesia', 'Asia', 'Lower Middle', 277534123),
+('Pakistan', 'Asia', 'Lower Middle', 240485658),
+('Nigeria', 'Africa', 'Lower Middle', 223804632),
+('Brazil', 'Americas', 'Upper Middle', 216422446),
+('Bangladesh', 'Asia', 'Lower Middle', 172954319),
+('Russia', 'Europe', 'Upper Middle', 144444359),
+('Mexico', 'Americas', 'Upper Middle', 128455567);
+
+-- group with multiple columns 
+SELECT continent,
+       income_level,
+       COUNT(*) AS no_of_countries
+ FROM population
+GROUP BY continent, 
+         income_level;
+
+/* write a SELECT statement to query the table population , and output the following columns as shown  below.
+
+continent
+income_level
+number_of_countries - Total number of countries in the selected continent, income_level.
+total_population - Total population of all the countries in the selected continent, income level.
+*/
+SELECT continent,
+       income_level,
+       COUNT(*) AS number_of_countries,
+       SUM(total_population) AS total_population
+ FROM population
+GROUP BY continent,
+         income_level;
+         
