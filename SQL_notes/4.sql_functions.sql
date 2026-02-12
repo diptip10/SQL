@@ -760,4 +760,40 @@ SELECT continent,
  FROM population
 GROUP BY continent,
          income_level;
-         
+
+-- HAVING CLAUSE
+-- continents with more than one country
+SELECT continent,
+       COUNT(*) AS number_of_countries
+ FROM Population
+GROUP BY continent
+HAVING COUNT(*) > 1;
+
+-- also we can use alias
+SELECT continent,
+       COUNT(*) AS number_of_countries
+ FROM Population
+GROUP BY continent
+HAVING number_of_countries > 1;
+
+SELECT continent,
+       COUNT(*) AS no_of_countries,
+       SUM(total_population) AS total_population
+ FROM population
+GROUP BY continent
+HAVING SUM(total_population) > 60000000
+AND COUNT(*) > 3 ;
+
+/*write a SELECT statement to query the table population , and output the following columns as shown.
+
+continent 
+number_of_countries - Number of countries in this continent
+average_population - Average population of the countries in this continent
+In the result set, only include the continents with the average population of countries between 200 million and 300 million.
+*/
+SELECT continent,
+       COUNT(*) AS number_of_countries,
+       AVG(total_population) AS average_population
+ FROM population
+GROUP BY continent
+HAVING average_population BETWEEN 200000000 AND 300000000;
