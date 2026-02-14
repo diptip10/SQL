@@ -163,3 +163,34 @@ SELECT co.name AS continent_name,
        cy.population AS country_population
  FROM continent co FULL JOIN country cy ON co.name = cy.cont_name;
 
+-- JOIN WITH FILTERS
+SELECT *
+ FROM continent co JOIN country cy ON co.name = cy.cont_name
+WHERE cy.population <= 1000000000;
+
+SELECT *
+ FROM continent co JOIN country cy ON co.name = cy.cont_name
+WHERE co.name = 'Asia';
+
+SELECT *
+ FROM continent co JOIN country cy ON co.name = cy.cont_name
+WHERE cy.population > 1000000000
+    AND co.name = 'Asia'
+    AND cy.name = 'India';
+
+/*
+ write a SELECT statement to join the tables continent  and country using the continent name, and output the following columns as shown in the screenshot below.
+
+Also, the result set should only include countries with a population of less than 200 million.
+
+continent_name  - Name of the continent from either of the tables
+continent_population  - population of the continent from continent table
+country_name - Name of the country from the country table
+country_population - population of the country from the country table
+*/
+SELECT co.name AS continent_name,
+       co.population AS continent_population,
+       cy.name AS country_name,
+       cy.population AS country_population
+ FROM continent co JOIN country cy ON co.name = cy.cont_name
+WHERE cy.population  < 200000000;
