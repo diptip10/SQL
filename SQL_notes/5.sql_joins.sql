@@ -47,4 +47,31 @@ SELECT * FROM continent;
 
 SELECT * FROM country;
 
+/*
+write a SELECT statement to join the tables continent  and country using the continent name, and output the following columns as shown below.
 
+continent_name  - Name of the continent from either of the tables
+continent_population  - population of the continent from continent table
+country_name - Name of the country from the country table
+country_population - population of the country from the country table
+*/
+SELECT co.name AS continent_name,
+       co.population AS continent_population,
+       cy.name AS country_name,
+       cy.population AS country_population
+ FROM continent co JOIN country cy ON co.name = cy.cont_name;
+
+ -- CARTESIAN PRODUCT
+/*
+write a SELECT statement to join the tables continent  and country without any join conditions, and output the following columns as shown in the screenshot below.
+
+continent_name  - Name of the continent from either of the tables
+continent_population  - population of the continent from continent table
+country_name - Name of the country from the country table
+country_population - population of the country from the country table
+*/
+SELECT co.name AS continent_name,
+       co.population AS continent_population,
+       cy.name AS country_name,
+       cy.population AS country_population
+ FROM continent co CROSS JOIN country cy;
