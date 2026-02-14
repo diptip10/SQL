@@ -128,3 +128,38 @@ SELECT co.name AS continent_name,
        cy.name AS country_name,
        cy.population AS country_population
  FROM continent co LEFT OUTER JOIN country cy ON co.name = cy.cont_name;
+
+-- RIGHT OUTER JOIN
+/*
+ write a SELECT statement to join the tables continent  and country using the continent name, and output the following columns as shown in the screenshot below.
+
+The output should include all the records from country table, but only the matching records from the continent table.
+
+continent_name  - Name of the continent from either of the tables
+continent_population  - population of the continent from continent table
+country_name - Name of the country from the country table
+country_population - population of the country from the country table
+*/
+SELECT co.name AS continent_name,
+       co.population AS continent_population,
+       cy.name AS country_name,
+       cy.population AS country_population
+ FROM continent co RIGHT JOIN country cy ON co.name = cy.cont_name;
+
+ -- FULL OUTER JOIN
+ /*
+ write a SELECT statement to join the tables continent  and country using the continent name, and output the following columns as shown in the screenshot below.
+
+The output should include all the records from both continent and country tables, but joined together when there is a match. 
+
+continent_name  - Name of the continent from either of the tables
+continent_population  - population of the continent from continent table
+country_name - Name of the country from the country table
+country_population - population of the country from the country table
+*/
+SELECT co.name AS continent_name,
+       co.population AS continent_population,
+       cy.name AS country_name,
+       cy.population AS country_population
+ FROM continent co FULL JOIN country cy ON co.name = cy.cont_name;
+
