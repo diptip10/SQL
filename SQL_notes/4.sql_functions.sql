@@ -839,4 +839,40 @@ HAVING COUNT(*) > 1
 ORDER BY total_population DESC
 LIMIT 1;
 
+/*
+-- table -> tourism
+columns -> country, continent, tourist_count
+
+write a SELECT statement to query the table tourism , and output the following columns as shown in below.
+
+continent
+number_of_countries - Number of countries in this continent
+Please, exclude continents with only one country in this table.
+*/
+SELECT continent,
+       COUNT(*) AS number_of_countries
+ FROM tourism
+GROUP BY continent
+HAVING number_of_countries > 1;
+
+/*
+write a SELECT statement to query the table tourism , and output the following columns as shown in the screenshot below.
+
+continent
+number_of_countries - Number of countries in this continent
+lowest_tourist_count - tourist_count of the country in this continent with the lowest value
+highest_tourist_count - tourist_count of the country in this continent with the highest value
+
+Also,
+exclude countries with less than 30 million tourists.
+exclude continents with less than 3 countries in the Top 10 list
+*/ 
+SELECT continent,
+      COUNT(*) AS number_of_countries,
+      MIN(tourist_count) AS lowest_tourist_count,
+      MAX(tourist_count) AS highest_tourist_count
+ FROM tourism
+WHERE tourist_count >= 30
+GROUP BY continent
+HAVING  number_of_countries > 2;
 
