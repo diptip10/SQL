@@ -259,3 +259,39 @@ SELECT p.first_name || ' ' || p.last_name AS player_name,
 WHERE m.year IN (2022,2023)
 GROUP BY p.first_name, p.last_name, p.country 
 ORDER BY number_of_wins DESC;
+
+/*
+write a SELECT statement to join the tables player  and result using player_id/ winner_id/ runner_up_id, and output the following columns as shown below.
+
+year 
+tournament 
+winner_name - Full name of the player & also his country in brackets.
+runner_up_name - Full name of the player & also his country in brackets.
+*/
+SELECT m.year AS year,
+       m.tournament AS tournament,
+       w.first_name || ' ' || w.last_name || '(' || w.country || ')' AS winner_name,
+       r.first_name || ' ' || r.last_name || '(' || r.country || ')' AS runner_up_name
+ FROM match_result m 
+  JOIN player w ON (m.winner_id = w.player_id)
+  JOIN player r ON (r.player_id = m.runner_up_id); 
+
+/*
+write a SELECT statement to join the tables player  and result using player_id/ winner_id/ runner_up_id, and output the following columns as shown  below.
+
+year 
+
+tournament 
+
+winner_name - Full name of the player & also his country in brackets. If we don't have the player details in the player table, output the value as Unknown.
+
+runner_up_name - Full name of the player & also his country in brackets. If we don't have the player details in the player table, output the value as Unknown.
+*/
+SELECT m.year AS year,
+       m.tournament AS tournament,
+       IIF( w.first_name IS NULL,'Unknown', w.first_name || ' ' || w.last_name || '(' || w.country || ')') AS winner_name,
+       IIF(r.first_name IS NULL, 'Unknown', r.first_name || ' ' || r.last_name || '(' || r.country || ')') AS runner_up_name
+ FROM match_result m 
+  LEFT JOIN player w ON (m.winner_id = w.player_id)
+  LEFT JOIN player r ON (m.runner_up_id = r.player_id);
+  
