@@ -64,3 +64,30 @@ SELECT country,
        WHERE continent IN ('Americas', 'Africa'))
 WHERE total_population > 200000000;
 
+/*
+write a SELECT statement to query the table population , and produce a result set as below
+
+country
+continent
+cnty_population - total_population of the country
+highest_cnty_population - total_population of the highest populated country in the continent
+lowest_cnty_population - total_population of the lowest populated country in the continent
+
+Order the result by country name ascending
+
+*/
+
+SELECT cnty.country,
+       cnty.continent,
+       cnty.total_population AS cnty_population,
+       cont.highest_cnty_population,
+       cont.lowest_cnty_population
+ FROM population cnty
+ JOIN (SELECT continent,
+              MAX(total_population) AS highest_cnty_population,
+              MIN(total_population) AS lowest_cnty_population
+        FROM population 
+        GROUP BY continent) cont ON (cnty.continent = cont.continent)
+ORDER BY cnty.country ASC;
+       
+-- CORRELATED SUBQUERIES
