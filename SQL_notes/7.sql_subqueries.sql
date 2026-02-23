@@ -90,4 +90,50 @@ SELECT cnty.country,
         GROUP BY continent) cont ON (cnty.continent = cont.continent)
 ORDER BY cnty.country ASC;
        
--- CORRELATED SUBQUERIES
+-- CORRELATED SUBQUERIES -- depends on the main query
+-- correlated subquery is executed for each record from the result set of the main query.
+
+/*
+write a SELECT statement (with correlated subquery) to query the table population , and  find all the countries with the population that is greater than or equal to the average population countries in that continent.
+
+The result set includes the columns country, continent and total_population
+*/
+SELECT m.country,
+       m.continent,
+       m.total_population
+ FROM population m
+WHERE m.total_population >= (SELECT AVG(s.total_population)
+                            FROM population s
+                           WHERE s.continent = m.continent);
+
+
+/*
+table1 - player
+columns - player_id, first_name, last_name, country, population
+
+table2 - match_result
+columns - year, tournament, winner_id, runner_up_id
+
+relationship - winner_id and runner_up_id in match_result table relates to player table via player_id
+
+
+write a SELECT statement with JOINs and Subqueries
+to join the tables player  and match_result using player_id/ winner_id
+then find all the players who won exactly 2 grand slams
+The result set should include the output as below
+year
+tournament
+player_name  - Full name of the player, i.e., first_name and last_name concatenated using a blank space between them.
+player_country
+
+*/
+SELECT m.year,
+       m.tournament,
+       P.first_name || ' ' || P.last_name AS player_name,
+       p.country AS player_country
+ FROM match_result m JOIN player p ON (p.player_id = m.winner_id)
+WHERE m.winner_id IN (SELECT winner_id 
+                       FROM match_result 
+                      GROUP BY winner_id
+                      HAVING COUNT(*) = 2 ); 
+
