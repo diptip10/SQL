@@ -137,3 +137,35 @@ WHERE m.winner_id IN (SELECT winner_id
                       GROUP BY winner_id
                       HAVING COUNT(*) = 2 ); 
 
+/*
+write a SELECT statement with JOINs and Subqueries
+
+to join the tables player  and match_result using player_id/ winner_id
+
+then find total wins by the player
+
+The result set should include the output as below
+
+year
+
+tournament
+
+player_name  - Full name of the player, i.e., first_name and last_name concatenated using a blank space between them.
+
+player_country 
+
+total_wins - Total wins by the player across all the grand slams for which we have the data for (2022 and 2023)
+*/
+
+SELECT m.year,
+       m.tournament,
+       p.first_name || ' ' || p.last_name AS player_name,
+       p.country AS player_country,
+       w.total_wins
+ FROM match_result m 
+  JOIN player p ON (p.player_id = m.winner_id)
+  JOIN ( SELECT winner_id,
+                COUNT(*) AS total_wins
+          FROM match_result 
+         GROUP BY winner_id) w ON (m.winner_id = w.winner_id);
+
