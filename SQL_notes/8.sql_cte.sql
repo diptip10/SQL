@@ -60,3 +60,33 @@ SELECT cnty.country,
 JOIN cte_continent cont ON (cnty.continent = cont.continent)
 JOIN cte_world;
 
+/*
+write a SELECT statement using Common Table Expressions (CTE) to query the table population, and produce the result set as shown in the screenshot below.
+
+country
+
+continent
+
+cnty_population - Population of the country
+
+cont_population - Total population of the continent to which the country belongs to
+
+highest_cont_population - Population of the continent with the highest population in the entire table
+*/
+
+WITH cte_cont AS 
+ (SELECT continent,
+        SUM(total_population) AS cont_population
+  FROM population
+ GROUP BY continent),
+  cte_world AS
+(SELECT MAX(cont_population) AS highest_cont_population
+ FROM cte_cont)
+SELECT cnty.country,
+       cnty.continent,
+       cnty.total_population AS cnty_population,
+       cont.cont_population,
+       cte_world.highest_cont_population
+ FROM population cnty
+JOIN cte_cont cont ON (cnty.continent = cont.continent)
+JOIN cte_world;
