@@ -90,3 +90,35 @@ SELECT cnty.country,
  FROM population cnty
 JOIN cte_cont cont ON (cnty.continent = cont.continent)
 JOIN cte_world;
+
+
+/*
+ write a SELECT statement with JOINs and Common Table Expressions (CTEs)
+to join the tables player  and match_result using player_id/ winner_id
+then find total wins by the player
+The result set should include the output as below
+
+year
+
+tournament
+
+player_name  - Full name of the player, i.e., first_name and last_name concatenated using a blank space between them.
+
+player_country 
+
+total_wins - Total wins by the player across all the grand slams for which we have the data for (2022 and 2023)
+*/
+
+WITH cte_winner AS
+ (SELECT winner_id,
+         COUNT(*) AS total_wins
+   FROM match_result
+  GROUP BY winner_id)
+ SELECT m.year,
+        m.tournament,
+        p.first_name || ' ' || p.last_name AS player_name,
+        p.country AS player_country,
+        w.total_wins
+  FROM match_result m JOIN player p ON ( m.winner_id = p.player_id)
+  JOIN cte_winner w ON (m.winner_id = w.winner_id);
+ 
