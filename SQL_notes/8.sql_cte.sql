@@ -122,3 +122,41 @@ WITH cte_winner AS
   FROM match_result m JOIN player p ON ( m.winner_id = p.player_id)
   JOIN cte_winner w ON (m.winner_id = w.winner_id);
  
+ /*
+write a SELECT statement with JOINs and Common Table Expressions (CTEs)
+to join the tables player  and match_result using player_id/ winner_id
+then find total wins by the player
+The result set should include the output as below
+
+year
+
+tournament
+
+player_name  - Full name of the player, i.e., first_name and last_name concatenated using a blank space between them.
+
+player_country 
+
+total_wins - Total wins by the player across all the grand slams for which we have the data for (2022 and 2023)
+
+all_player_avg_wins - Average number of wins across all the players who have won any gland slams during 2022 and 2023. This value has to be rounded to include only 2 decimal places
+*/
+
+WITH cte_winner AS
+ (SELECT winner_id,
+         COUNT(*) AS total_wins
+   FROM match_result
+  GROUP BY winner_id),
+  cte_avg_wins AS
+  (SELECT ROUND(AVG(total_wins),2) AS all_player_avg_wins
+    FROM cte_winner)
+  SELECT m.year,
+         m.tournament,
+         p.first_name || ' ' || p.last_name AS player_name,
+         p.country AS player_country,
+         w.total_wins,
+         a.all_player_avg_wins
+    FROM match_result m JOIN player p ON (m.winner_id = p.player_id)
+    JOIN cte_winner w ON (m.winner_id = w.winner_id)
+    JOIN cte_avg_wins a ;
+         
+         
