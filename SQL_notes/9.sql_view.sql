@@ -45,4 +45,30 @@ SELECT p.country,
        v.lowest_cont_population
  FROM Population p JOIN vw_continent v ON (p.continent = v.continent);
  
- 
+ /*
+-- 1.
+create a view called vw_population with a SELECT statement to join the tables continent  and country using the continent name, and include the following columns
+
+continent_name  - Name of the continent from either of the tables
+
+continent_population  - population of the continent from continent table
+
+country_name - Name of the country from the country table
+
+country_population - population of the country from the country table
+*/
+CREATE VIEW vw_population
+AS 
+SELECT cont.name AS continent_name,
+       cont.population AS continent_population,
+       cnty.name AS country_name,
+       cnty.population AS country_population
+ FROM continent cont JOIN country cnty ON (cont.name = cnty.cont_name);
+
+/*
+-- 2.
+write a SELECT statement to query the view created above  vw_population with a filter to include only countries with a population of less than 200 million.
+*/
+SELECT *
+ FROM vw_population
+WHERE country_population < 200000000;
