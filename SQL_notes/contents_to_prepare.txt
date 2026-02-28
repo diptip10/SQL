@@ -1,0 +1,72 @@
+Academy Accreditation - Databricks Lakehouse Fundamentals
+
+Databricks Certified Data Engineer Associate
+
+Partner Training - Data & AI Governance with Unity Catalog (Verified)
+sql, pyspark, python, git 
+
+Databricks architecture -- 1. control plane--databricks user interface, compute infrastructure, unity catalog, queries and code
+			   2. compute plane--(data processing takes place)--clasic compute, serverless compute
+		           3. workspace cloud storage(ADLS Gen2)
+
+-- clasic compute-- single node/multi node, 
+		    access mode (single user--only one user access, standard/shared--multi user access,no isolation shared),
+		    Databricks runtime-- databricks rumtime,databricks runtime ml,
+		    Auto termination,
+		    Auto scaling ,
+		    Cluster VM Type/ Size,
+		    Cluster policy
+-- magic commands - %sql, %md, %run, %fs ls
+-- databricks utilities--
+	1. file system utilities
+	2. secret utilities
+	3. Widget utilities
+	4. Notebook workflow utilities
+
+-- Databricks git folders/repos
+there are two ways to establishing the connection between databricks and GitHub
+1. Databricks GitHub app - strong security, granular level accessand also easier to integrate
+2. personnel access tokens
+
+-- link the github account-- install databricks app in github and configure to provide the access required for the specific GitHub repositories.--create git folders in
+databricks folders--clone the repo via git UI-- create development branches and commit and push changes to the remote repository
+
+-- follow the standard process for raising pull requests for reviewing the code changes and merging to the main branch , etc 
+-- as the code is in git , you can trigger automated CICD processes using DevOps pipelines
+
+
+-- setting --Linked accounts -- git provider -- git link account(use this)/ personnel access token -- authentication
+-- search bar -- github.com/apps/databricks -- install 
+-- copy the repo url from github -- go to databricks ws -- create git folder -- paste repo url-- create 
+in folder we see main branch -- click on it and create new/feature branch (using git ui-- open when click on branch name which is on top) -- work in feature branch
+-- changes and commit and push using git UI-- create a pull request on your git provider (after commiting and pushing changes to feature branch)-- click on pull request
+click on feature branch change-- create pull request option in it -- create -- it will go through a review -- reviewer is looking at the code , and they can simply click on 
+the merger pull request
+pull on regular basis from github so that you get changes that other team members are making and there are no merge conflicts
+
+-- Debugging databricks notebooks-- finding and fixing issues in your code /how code runs step by step 
+settings--developer --python notebook interactive debugger(on/enabled)  
+
+-- Hive metastore - you can create tables over the data  in cloud storage (tables, view, functions) -- lack fine grained access control like row and column level access,
+lack of audit logging, lineage support for multi cloud environment 
+
+-- dbfs-- databricks file system is a distributed file system that is fully integrated within databricks - provide abstraction layer over cloud storage such as ADLS
+for ex . in azure databricks , you can simply mount a container from the ADLS into dbfs and access it similar to accessing a shared drive on your computer
+ 
+-- Unity catalog -- similar to hive-- also allows us to create tables and views on structure data , functions , offers us another object called volume which is an abstraction layer
+on top of files in the cloud storage
+Unified solution for accessing files as well as table objects
+offers data lineage, data security, data governance
+
+-- UNITY catalog objects -- 
+	*storage credentials-authentication mechanism for accessing the data stored in azure storage on behalf of user- created with managed identity
+ 		or a service principle -- access connector for databricks
+ 	*external location -- combines the storage credential with the cloud storage container to gain access to the specific container in cloud storage
+---------------------------------------
+1. create access connector
+2. create adls
+3. Assign storage blob data contributor role
+4. create storage credentials
+5. create external location
+---------------------
+storage credential-- databricks unity catalog object, which is credential but underneath it is a access connector
