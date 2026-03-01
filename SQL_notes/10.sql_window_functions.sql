@@ -62,4 +62,40 @@ SELECT company,
        SUM(volume) over(PARTITION BY company) AS company_sales,
        SUM(volume) OVER() AS industry_sales
  FROM sales;
+
+/*
+ write a SELECT statement to query the table sales , and produce a result set with an additional column called sales_rank as below.
+
+sales_rank  - Rank given based on the volume of sales. The record with the highest volume gets rank 1.
+*/
+
+SELECT company,
+       year,
+       quarter,
+       volume,
+       RANK() OVER(ORDER BY volume DESC) AS sales_rank
+ FROM sales;
+
+/*
+write a SELECT statement to query the table sales , and produce a result set with the additional columns as below
+
+
+
+yearly_rank  - Rank based on the sale volume within the company/ year. Highest sale volume is ranked as 1.
+
+company_rank  -  Rank based on the sale volume within the company. Highest sale volume is ranked as 1.
+
+industry_rank - Rank based on the sale volume across all the records. Highest sale volume is ranked as 1.
+
+*/
+
+SELECT company,
+       year,
+       quarter,
+       volume,
+       RANK() OVER(PARTITION BY company, year ORDER BY volume DESC) AS yearly_rank,
+       RANK() OVER(PARTITION BY company ORDER BY volume DESC) AS company_rank ,
+       RANK() OVER(ORDER BY volume DESC) AS industry_rank
+ FROM sales;
+
  
