@@ -88,7 +88,6 @@ company_rank  -  Rank based on the sale volume within the company. Highest sale 
 industry_rank - Rank based on the sale volume across all the records. Highest sale volume is ranked as 1.
 
 */
-
 SELECT company,
        year,
        quarter,
@@ -98,4 +97,42 @@ SELECT company,
        RANK() OVER(ORDER BY volume DESC) AS industry_rank
  FROM sales;
 
- 
+ /*
+write a SELECT statement to query the table sales , and produce a result set with the additional column as below
+
+yoy_growth  - Increase in sales volume compared to the previous year/ quarter for this company. If there isn't a previous year, please leave the value as NULL.
+*/
+SELECT company,
+       year,
+       quarter,
+       volume,
+       volume - LAG(volume, 4) OVER(PARTITION BY company ORDER BY year, quarter) AS yoy_growth
+ FROM sales;
+
+/*write a SELECT statement to query the table sales , and produce a result set with the additional column as below
+
+next_quarter_volume  - Sales volume from the next quarter for this company. If we don't have data for next quarter. Please report as NULL.
+
+growth_pct  - Percentage increase in sales volume from this quarter to next for this company. If we don't have data for next quarter. Please report as NULL. Also, please report the percentage with upto 2 decimal places as below.
+*/
+SELECT company,
+       year,
+       quarter,
+       volume,
+       LEAD(volume) OVER(PARTITION BY company ORDER BY year, quarter) AS next_quarter_volume,
+        ROUND(((LEAD(volume) OVER(PARTITION BY company ORDER BY year, quarter) - volume) / (CAST(volume AS REAL))) * 100, 2) AS growth_pct
+ FROM sales;
+
+ /*write a SELECT statement to query the table sales , and produce a result set with the additional column as below
+
+sale_rank  - Rank based on the volume of sales. Record with the highest volume is assigned the value 1. If there is a tie, skip the next rank.
+
+sale_dense_rank  - Rank based on the volume of sales. Record with the highest volume is assigned the value 1. Do not skip any ranks even if there is a tie.
+*/
+SELECT company,
+       year,
+       quarter,
+       volume,
+       RANK() OVER(ORDER BY volume DESC) AS sale_rank,
+       DENSE_RANK() OVER(ORDER BY volume DESC) AS sale_dense_rank
+ FROM sales;
