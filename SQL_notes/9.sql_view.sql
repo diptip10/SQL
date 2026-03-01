@@ -112,4 +112,4 @@ SELECT m.year,
  FROM player p JOIN match_result m ON (p.player_id = m.winner_id)
  JOIN cte_winner w ON (m.winner_id = w.winner_id)
  JOIN cte_avg_wins av;
- 
+
