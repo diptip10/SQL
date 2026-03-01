@@ -168,3 +168,61 @@ SELECT company,
        NTILE(4) OVER(PARTITION BY company ORDER BY year, quarter) AS bucket
  FROM sales;
 
+/*write a SELECT statement to query the table sales , and produce a result set with the additional column
+ rolling_yearly_volume.
+
+rolling_yearly_volume - Rolling yearly volume (sum of 4 quarters) for the company.
+*/
+SELECT company,
+       year,
+       quarter,
+       volume,
+       SUM(volume) OVER(PARTITION BY company ORDER BY year,quarter
+                        ROWS BETWEEN CURRENT ROW AND 3 FOLLOWING) AS rolling_yearly_volume
+ FROM sales;
+
+/*
+TABLE - chatgpt_traffic 
+COLUMNS - year, month, visits
+
+
+write a SELECT statement to query the table chatgpt_traffic , and produce a result set with the additional columns as below
+
+
+
+growth - Increase in visits since the last month.
+
+growth_percentage  - Increase in visits since the last month represented with up to 2 decimal places.
+*/
+SELECT year,
+       month,
+       visits,
+       visits - LAG(visits) OVER(ORDER BY year, month) AS growth,
+       ROUND(((visits - LAG(visits) OVER(ORDER BY year, month)) / CAST(visits AS REAL)) * 100, 2) AS growth_percentage
+ FROM chatgpt_traffic;
+ 
+/*write a SELECT statement to query the table chatgpt_traffic , and produce a result set without the duplicates. For the duplicate records the record with the highest number of visits is the correct one.
+*/
+WITH cte_visits
+AS
+(SELECT year,
+       month,
+       visits,
+       ROW_NUMBER() OVER(PARTITION BY year, month ORDER BY visits DESC) AS rn 
+ FROM chatgpt_traffic)
+ SELECT year,
+        month,
+        visits
+ FROM cte_visits
+WHERE rn = 1;
+
+/*
+write a SELECT statement to query the table chatgpt_traffic , and produce a result set with the rolling quarterly visits
+*/
+SELECT year,
+       month,
+       visits,
+       SUM(visits) OVER(ORDER BY year, month
+                        ROWS BETWEEN CURRENT ROW AND 3 FOLLOWING) as rolling_quarterly_visits
+ FROM chatgpt_traffic ;
+
