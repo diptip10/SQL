@@ -30,3 +30,36 @@ VALUES
     ('Tesla', 2023,'Q4',484507)    ;	
     
 SELECT * FROM sales;
+
+
+/*
+write a SELECT statement to query the table sales , and produce a result set with an additional column called total_voume as below.
+
+total_volume  - populated with total volume of cars delivered across all the years.
+*/
+SELECT company,
+       year,
+       quarter,
+       volume,
+       SUM(volume) OVER()AS total_volume
+ FROM sales ;
+
+/*
+write a SELECT statement to query the table sales , and produce a result set with the additional columns as below
+
+yearly_sales  - total volume of cars delivered by the company in that year.
+
+company_sales -  total volume of cars delivered by the company during all years.
+
+industry_sales - total volume of cars delivered by all the companies during all year.
+*/
+
+SELECT company,
+       year,
+       quarter,
+       volume,
+       SUM(volume) OVER(PARTITION BY company, year) AS yearly_sales,
+       SUM(volume) over(PARTITION BY company) AS company_sales,
+       SUM(volume) OVER() AS industry_sales
+ FROM sales;
+ 
