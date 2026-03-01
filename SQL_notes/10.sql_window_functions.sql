@@ -136,3 +136,35 @@ SELECT company,
        RANK() OVER(ORDER BY volume DESC) AS sale_rank,
        DENSE_RANK() OVER(ORDER BY volume DESC) AS sale_dense_rank
  FROM sales;
+
+/*write a SELECT statement to query the table sales , and produce a result set with only the unique
+ records based on company, year & quarter. For each company, year, quarter, the record with the latest 
+ created_date is the correct one, and the earlier one should be removed from the result set.
+*/
+WITH cte_dup
+AS 
+(SELECT company,
+        year,
+        quarter,
+        volume,
+       ROW_NUMBER() OVER(PARTITION BY company, year, quarter ORDER BY created_date DESC) AS rn
+ FROM sales)
+ SELECT company,
+        year,
+        quarter,
+        volume
+  FROM cte_dup 
+ WHERE rn = 1;
+
+/*
+write a SELECT statement to query the table sales , and produce a result set with this data 
+split into 4 buckets for each company as shown below. The buckets should be allocated based on
+ the year and quarter, both in ascending order.
+*/
+SELECT company,
+       year, 
+       quarter,
+       volume,
+       NTILE(4) OVER(PARTITION BY company ORDER BY year, quarter) AS bucket
+ FROM sales;
+
